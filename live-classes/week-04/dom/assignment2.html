@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Interest</title>
+</head>
+
+<body>
+    <h1>Calculate interest</h1>
+    <input type="text" placeholder="Amount" id="amount"><br><br>
+    <input type="text" placeholder="Rate" id="rate"><br><br>
+    <input type="text" placeholder="Time" id="time"><br><br>
+    <button id="calculate" onclick="calculateInterest()">Calculate Interest</button>
+    <div id="result"></div>
+    <script>
+        //debouncing example
+
+        let timeout;
+        function debounceExample() {
+//when we call debounceExample funation then it will wait 1sec to call calculateInteratest, but we call
+//again that debounceExample funcation within that time then it will clear old timing and start time again
+            clearTimeout(timeout)
+            timeout = setTimeout(function(){
+              calculateInterest()
+            },1000)
+        }
+        async function calculateInterest() {
+            const amount = parseInt(document.getElementById("amount").value)
+            const rate = parseInt(document.getElementById("rate").value)
+            const time = parseInt(document.getElementById("time").value)
+            const ans = (amount * time * rate) / 100
+
+            const response = await fetch("https://sum-server.100xdevs.com/interest?principal=" + amount + "&rate=" + rate + "&time=" + time)
+            const finalResult = await response.text()
+
+            document.getElementById("result").innerHTML = finalResult
+        }
+    </script>
+</body>
+
+</html>
