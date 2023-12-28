@@ -1,29 +1,4 @@
-function calculateTotalSpentByCategory(transactions) {
-  // Create an object to store the total spent for each category
-  const categoryTotals = {};
-
-  // Iterate over each transaction
-  transactions.forEach(transaction => {
-    const { category, price } = transaction;
-
-    // If the category is not in categoryTotals, initialize it with the current price
-    if (!categoryTotals[category]) {
-      categoryTotals[category] = price;
-    } else {
-      // If the category is already in categoryTotals, add the current price to the total
-      categoryTotals[category] += price;
-    }
-  });
-
-  // Convert the categoryTotals object into an array of objects
-  const result = Object.keys(categoryTotals).map(category => ({
-    category,
-    totalSpent: categoryTotals[category]
-  }));
-
-  return result;
-}
-
+const fs = require('fs');
 // Example usage:
 const transactions = [
   { id: 1, timestamp: 1656076800000, price: 10, category: 'Food', itemName: 'Pizza' },
@@ -48,59 +23,13 @@ const transactions = [
 //   console.log(key)
 // }
 
-//   let record = {}
-//   for (let i = 0; i < transactions.length; i++) {
-//       const transaction = transactions[i]
-//       if (transaction['category'] in record) {
-//           record[transaction['category']] += transaction['price']
-//       } else {
-//           record[transaction['category']] = transaction['price']
-//       }
-//   }
-//   let result = []
-//     for (const [category, price] of Object.entries(record)) {
-//         result.push({ category, totalSpent: price })
-//     }
-// console.log(record)
-
-function isAnagram(str1, str2) {
 
 
-  // let check = false;
-  // if(str1.length != str2.length){
-  //   return check
-  // }else{
-  //   for(let i=0;i<str1.length;i++){
-  //     for(let j=0;j<str1.length;j++){
-  //       if(str1[i]===str2[j]){
-  //         check=true;
-  //       }
-  //     }
-  //     if(!check){
-  //       return check
-  //     }
-  //   }
-  // }
-
-}
-
-// const ans=  isAnagram("geek=squiz","zuiqkeegs")
-// console.log(ans)
-
-//   function countVowels(str) {
-//     // Your code here
-//     str = str.replace(/\s/g, '').toLowerCase()
-//     let ans = 0
-//     for (let i = 0; i < str.length; i++) {
-//       if (str[i] === "a" || str[i] === "e" || str[i] === "i" || str[i] === "o" || str[i] === "u") {
-//         ans++
-//       }
-//     }
-//     return ans
-//   }
-// let s ="aeiou"
-//   console.log(countVowels(s))
-
-let str="Kakt"
-str = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-console.log(str === str.split('').reverse().join(''))
+const content ="i am new string"
+fs.writeFile('abc.txt', content,'utf-8',(error)=>{
+    if(error){
+        console.log(error)
+        return
+    }
+    console.log('File successfuly written')
+})
