@@ -22,23 +22,5 @@ const transactions = [
 // for(const key in transactions[2]){
 //   console.log(key)
 // }
-function clearFile() {
-  fs.readFile('abc.txt', 'utf-8', (err, data) => {
-    if (err) {
-      console.log(err)
-      return
-    }
-    data = data.replace(/\s+/g, ' ')
+// JavaScript (script.js)
 
-    fs.writeFile('abc.txt',data,'utf-8',(err)=>{
-      if(err){
-        console.log(err)
-        return
-      }
-      console.log("File written succesfully")
-    })
-  })
-  
-}
-
-clearFile()
