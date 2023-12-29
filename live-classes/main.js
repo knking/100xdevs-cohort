@@ -22,14 +22,23 @@ const transactions = [
 // for(const key in transactions[2]){
 //   console.log(key)
 // }
-
-
-
-const content ="i am new string"
-fs.writeFile('abc.txt', content,'utf-8',(error)=>{
-    if(error){
-        console.log(error)
-        return
+function clearFile() {
+  fs.readFile('abc.txt', 'utf-8', (err, data) => {
+    if (err) {
+      console.log(err)
+      return
     }
-    console.log('File successfuly written')
-})
+    data = data.replace(/\s+/g, ' ')
+
+    fs.writeFile('abc.txt',data,'utf-8',(err)=>{
+      if(err){
+        console.log(err)
+        return
+      }
+      console.log("File written succesfully")
+    })
+  })
+  
+}
+
+clearFile()
