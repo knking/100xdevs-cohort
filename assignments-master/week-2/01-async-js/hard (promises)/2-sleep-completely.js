@@ -5,6 +5,16 @@
  */
 
 function sleep(milliseconds) {
+    const starttime = new Date().getTime()
+
+    while(new Date().getTime() - starttime < milliseconds){
+        // i am waiting to finish this call
+    }
+  return Promise.resolve(`wait over after ${milliseconds}  miliscond`)
 }
 
+sleep(5000).then((resolve)=>{
+    console.log(resolve)
+})
 module.exports = sleep;
+ 

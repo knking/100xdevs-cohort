@@ -3,6 +3,15 @@
 */
 
 function wait(n) {
-}
-
+    return new Promise(function(reslove,reject){
+        setTimeout(()=>{
+            reslove(`I am Printing After ${n} Second`)
+        },n*1000)
+    })
+  }
+  
+  wait(5).then((result)=>{
+    console.log(result)
+  })
+  
 module.exports = wait;

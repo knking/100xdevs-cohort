@@ -24,3 +24,15 @@ const transactions = [
 // }
 // JavaScript (script.js)
 
+// const currentDate = new Date();
+
+// // Specify the options for formatting
+// const options = { hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
+
+// // Format the date and time with AM/PM indicator
+// const formattedTime = currentDate.toLocaleString('en-US', options);
+
+// console.log(formattedTime);
+
+
+
