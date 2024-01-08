@@ -6,19 +6,36 @@
  */
 
 function wait1(t) {
-
+ return new Promise((reslove,reject)=>{
+    setTimeout(()=>{
+reslove("Primise one resolved")
+    },t)
+ })
 }
 
 function wait2(t) {
-
+return new Promise(function(reslove,reject){
+    setTimeout(function(){
+reslove("primise 2 resolved")
+    },t)
+})
 }
 
 function wait3(t) {
-
+return new Promise((reslove,reject)=>{
+    setTimeout(()=>{
+reslove("promise 3 resolved")
+    },t)
+})
 }
 
 function calculateTime(t1, t2, t3) {
-
+wait1(t1)
+.then(wait2(t2))
+.then(wait3(t3))
+.catch((err)=>{
+    console.log(err)
+})
 }
 
 module.exports = calculateTime;
