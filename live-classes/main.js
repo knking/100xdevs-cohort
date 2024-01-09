@@ -1,11 +1,11 @@
 const fs = require('fs');
 // Example usage:
 const transactions = [
-  { id: 1, timestamp: 1656076800000, price: 10, category: 'Food', itemName: 'Pizza' },
-  { id: 2, timestamp: 1656076800000, price: 20, category: 'Clothing', itemName: 'T-shirt' },
-  { id: 3, timestamp: 1656076800000, price: 15, category: 'Food', itemName: 'Burger' },
-  { id: 4, timestamp: 1656076800000, price: 25, category: 'Electronics', itemName: 'Headphones' },
-  { id: 5, timestamp: 1656076800000, price: 10, category: 'Food', itemName: 'Ice Cream' }
+    { id: 1, timestamp: 1656076800000, price: 10, category: 'Food', itemName: 'Pizza' },
+    { id: 2, timestamp: 1656076800000, price: 20, category: 'Clothing', itemName: 'T-shirt' },
+    { id: 3, timestamp: 1656076800000, price: 15, category: 'Food', itemName: 'Burger' },
+    { id: 4, timestamp: 1656076800000, price: 25, category: 'Electronics', itemName: 'Headphones' },
+    { id: 5, timestamp: 1656076800000, price: 10, category: 'Food', itemName: 'Ice Cream' }
 ];
 
 // const result = calculateTotalSpentByCategory(transactions);
@@ -34,48 +34,34 @@ const transactions = [
 
 // console.log(formattedTime);
 
+const express = require('express');
 
-/*
- * Write 3 different functions that return promises that resolve after t1, t2, and t3 seconds respectively.
- * Write a function that sequentially calls all 3 of these functions in order.
- * Return a promise chain which return the time in milliseconds it takes to complete the entire operation.
- * Compare it with the results from 3-promise-all.js
- */
+const path = require('path');
+const app = express();
 
-function wait1(t) {
-  return new Promise((reslove,reject)=>{
-     setTimeout(()=>{
- reslove("Primise one resolved")
- console.log(`Time ${t} spent`)
-     },t*1000)
+app.get('/files', (req, res) => {
+  fs.readdir(path.join(__dirname, './abc'), (err, files) => {
+    if (err) {
+      return res.status(500).json({ error: "Failed to retrieve files" })
+    }
+    res.status(200).json(files)
   })
- }
- 
- function wait2(t) {
- return new Promise(function(reslove,reject){
-     setTimeout(function(){
- reslove("primise 2 resolved")
- console.log(`Time ${t} spent`)
-     },t*1000)
- })
- }
- 
- function wait3(t) {
- return new Promise((reslove,reject)=>{
-     setTimeout(()=>{
- reslove("promise 3 resolved")
- console.log(`Time ${t} spent`)
-     },t*1000)
- })
- }
- 
- function calculateTime(t1, t2, t3) {
- wait1(t1)
- .then(wait2(t2))
- .then(wait3(t3))
- .catch((err)=>{
-     console.log(err)
- })
- }
-calculateTime(2,3,5)
- 
+})
+
+app.get('/file/:filename', (req, res) => {
+  const filePath = path.join(__dirname, './abc', req.params.filename)
+  console.log(filePath)
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      return res.status(404).send("File Not Found")
+    }
+    res.status(200).send(data)
+  })
+})
+
+app.all("*",(req,res)=>{
+  res.status(404).send("File Not Found")
+})
+app.listen(3000, () => {
+  console.log("Server is up and Running...")
+})
