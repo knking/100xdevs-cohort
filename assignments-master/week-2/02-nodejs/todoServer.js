@@ -39,11 +39,33 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+app.use(bodyParser.json());
+
+
+const todo = [{
+  "id":1,
+  "GYM": "Need to go gym"
+}, {
+  id:2,
+  "Read": "Need to read"
+}, {
+  id:3,
+  "Eat": "Need to Eat"
+}, {
+  id:1,
+  "slep": "Need to sleep"
+}]
+
+app.get('./todos', (req, res) => {
+  res.status(200).send.json(todo)
+})
+
+app.listen(3000, () => {
+  console.log("Server is Up and running...")
+})
+module.exports = app;

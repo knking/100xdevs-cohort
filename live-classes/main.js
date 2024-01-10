@@ -1,4 +1,4 @@
-const fs = require('fs');
+
 // Example usage:
 const transactions = [
     { id: 1, timestamp: 1656076800000, price: 10, category: 'Food', itemName: 'Pizza' },
@@ -33,35 +33,54 @@ const transactions = [
 // const formattedTime = currentDate.toLocaleString('en-US', options);
 
 // console.log(formattedTime);
+// 2.GET /todos/:id - Retrieve a specific todo item by ID
+//     Description: Returns a specific todo item identified by its ID.
+//     Response: 200 OK with the todo item in JSON format if found, or 404 Not Found if not found.
+//     Example: GET http://localhost:3000/todos/123
+    
 
 const express = require('express');
+  const bodyParser = require('body-parser');
+  
+  const app = express();
+  
+  app.use(bodyParser.json());
+  
 
-const path = require('path');
-const app = express();
+  const todo = [{
+    id:1,
+    "GYM": "Need to go gym"
+  }, {
+    id:2,
+    "Read": "Need to read"
+  }, {
+    id:3,
+    "Eat": "Need to Eat"
+  }, {
+    id:4,
+    "slep": "Need to sleep"
+  }]
 
-app.get('/files', (req, res) => {
-  fs.readdir(path.join(__dirname, './abc'), (err, files) => {
-    if (err) {
-      return res.status(500).json({ error: "Failed to retrieve files" })
-    }
-    res.status(200).json(files)
+  app.get('/todos',(req,res)=>{
+    res.status(200).json(todo)
   })
+
+app.get('/todos/:id',(req,res)=>{
+const ids = req.params.id;
+todo.forEach((data)=>{
+  if(data.id===ids){
+
+  }
+})
 })
 
-app.get('/file/:filename', (req, res) => {
-  const filePath = path.join(__dirname, './abc', req.params.filename)
-  console.log(filePath)
-  fs.readFile(filePath, 'utf-8', (err, data) => {
-    if (err) {
-      return res.status(404).send("File Not Found")
-    }
-    res.status(200).send(data)
-  })
-})
+// app.listen(3000,()=>{
+//     console.log("Server is Up and running...")
+//   })
 
-app.all("*",(req,res)=>{
-  res.status(404).send("File Not Found")
+const ans = todo.find((data)=>{
+return data.id === 2;
 })
-app.listen(3000, () => {
-  console.log("Server is up and Running...")
-})
+console.log(ans)
+
+ 
