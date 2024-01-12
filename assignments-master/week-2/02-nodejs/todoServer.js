@@ -48,7 +48,7 @@ app.use(bodyParser.json());
 
 
 const todo = [{
-  "id":1,
+  id:1,
   "GYM": "Need to go gym"
 }, {
   id:2,
@@ -64,6 +64,22 @@ const todo = [{
 app.get('./todos', (req, res) => {
   res.status(200).send.json(todo)
 })
+
+app.get('/todos/:id',(req,res)=>{
+  // const id = parseInt(req.params.id)
+  // const ans = todo.find((data)=>{
+  // return data.id===id;
+  // })
+  // res.status(200).json(ans)
+  
+  const ans = todo.find(t => t.id === parseInt(req.params.id));
+      if (!ans) {
+        res.status(404).send("No TODO");
+      } else {
+        res.json(ans);
+      }
+  })
+
 
 app.listen(3000, () => {
   console.log("Server is Up and running...")

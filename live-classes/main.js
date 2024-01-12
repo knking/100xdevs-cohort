@@ -66,21 +66,27 @@ const express = require('express');
   })
 
 app.get('/todos/:id',(req,res)=>{
-const ids = req.params.id;
-todo.forEach((data)=>{
-  if(data.id===ids){
+// const id = parseInt(req.params.id)
+// const ans = todo.find((data)=>{
+// return data.id===id;
+// })
+// res.status(200).json(ans)
 
-  }
-})
+const ans = todo.find(t => t.id === parseInt(req.params.id));
+    if (!ans) {
+      res.status(404).send("No TODO");
+    } else {
+      res.json(ans);
+    }
 })
 
-// app.listen(3000,()=>{
-//     console.log("Server is Up and running...")
-//   })
+app.listen(3000,()=>{
+    console.log("Server is Up and running...")
+  })
 
-const ans = todo.find((data)=>{
-return data.id === 2;
-})
-console.log(ans)
+// const ans = todo.find((data)=>{
+// return data.id === 2;
+// })
+// console.log(ans)
 
  
