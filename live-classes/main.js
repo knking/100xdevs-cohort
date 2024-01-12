@@ -40,53 +40,48 @@ const transactions = [
     
 
 const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
+const bodyParser = require('body-parser');
 
-  const todo = [{
-    id:1,
-    "GYM": "Need to go gym"
-  }, {
-    id:2,
-    "Read": "Need to read"
-  }, {
-    id:3,
-    "Eat": "Need to Eat"
-  }, {
-    id:4,
-    "slep": "Need to sleep"
-  }]
+const app = express();
 
-  app.get('/todos',(req,res)=>{
-    res.status(200).json(todo)
-  })
+app.use(bodyParser.json());
 
-app.get('/todos/:id',(req,res)=>{
-// const id = parseInt(req.params.id)
-// const ans = todo.find((data)=>{
-// return data.id===id;
-// })
-// res.status(200).json(ans)
 
-const ans = todo.find(t => t.id === parseInt(req.params.id));
-    if (!ans) {
-      res.status(404).send("No TODO");
-    } else {
-      res.json(ans);
-    }
+const todo = [{
+  "id": 5,
+  "title": "priya@gmail.com",
+  "description": "123321"
+}]
+
+app.get('/todos', (req, res) => {
+  res.status(200).json(todo)
 })
 
-app.listen(3000,()=>{
-    console.log("Server is Up and running...")
-  })
+app.get('/todos/:id', (req, res) => {
+  // const id = parseInt(req.params.id)
+  // const ans = todo.find((data)=>{
+  // return data.id===id;
+  // })
+  // res.status(200).json(ans)
 
-// const ans = todo.find((data)=>{
-// return data.id === 2;
-// })
-// console.log(ans)
+  const ans = todo.find(t => t.id === parseInt(req.params.id));
+  if (!ans) {
+    res.status(404).send("No TODO");
+  } else {
+    res.json(ans);
+  }
+})
 
- 
+app.post("/todos", (req, res) => {
+  const newTodo = {
+    id: Math.floor(Math.random() * 10 + 1),
+    title: req.body.title,
+    description: req.body.description
+  }
+  todo.push(newTodo)
+  res.status(200).json(todo)
+})
+
+app.listen(3000, () => {
+  console.log("Server is Up and running...")
+})
