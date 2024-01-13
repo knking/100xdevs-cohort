@@ -3,18 +3,21 @@ import React, { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Card from './components/Card'
 
 function App() {
   const [num, setNum] = useState("My Name is krishna ")
   
   return (
     <div>
-      {/* <HeaderWithButton /> */}
+      {/* <HeaderWithButton />
       <button style={{ margin: "20px" }} onClick={() => (setNum("My Name is " + Math.random()))}>Clik me to update Name</button>
       <Header title={num} />
       <Header title="My Name is Krishna" />
       <Header title="My Name is Krishna" />
-      <Header title="My Name is Krishna" />
+      <Header title="My Name is Krishna" /> */}
+
+      <Card/>
     </div>
   )
 }
@@ -28,10 +31,10 @@ function App() {
 //   </>
 // }
 
-const Header=React.memo(function ({title}) {
-  return <div>
-    {title}
-  </div>
-}
-)
+// const Header=React.memo(function ({title}) {
+//   return <div>
+//     {title}
+//   </div>
+// }
+// )
 export default App
