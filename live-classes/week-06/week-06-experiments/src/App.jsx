@@ -4,6 +4,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Card from './components/Card'
+import UseEffect from './components/UseEffect'
+import Assignment2 from './components/Assignment2'
 
 function App() {
   const [num, setNum] = useState("My Name is krishna ")
@@ -17,7 +19,9 @@ function App() {
       <Header title="My Name is Krishna" />
       <Header title="My Name is Krishna" /> */}
 
-      <Card/>
+      {/* <Card/> */}
+      {/* <UseEffect/> */}
+      <Assignment2/>
     </div>
   )
 }
