@@ -87,18 +87,31 @@
 
   app.put("/todos/:id",(req,res)=>{
     const id = req.params.id
+
     let item = todo.find((data)=>{
       return data.id ===id
     })
-    console.log(item)
-
     item.title = req.body.title
     item.description=req.body.description
     item.completed=true
-
     return res.json(todo)
   })
 
+// 5. DELETE /todos/:id - Delete a todo item by ID
+
+app.delete('/todos/:id',(req,res)=>{
+  const todoIndex= todo.findIndex(t => t.id === parseInt(req.params.id))
+  if(todoIndex === -1){
+    res.status(404).send("No Todo")
+  }else{
+    todo.splice(todoIndex,1)
+    res.send(todo)
+  }
+})
+
+app.use((req, res, next) => {
+  res.status(404).send();
+});
 
   app.listen(3000, () => {
     console.log("Server is Up and running...")
