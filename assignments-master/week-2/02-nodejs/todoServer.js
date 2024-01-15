@@ -53,11 +53,12 @@
     "title": "priya@gmail.com",
     "description": "123321"
   }]
-  
+  //1.GET /todos - Retrieve all todo items
   app.get('/todos', (req, res) => {
     res.status(200).json(todo)
   })
-  
+    
+  //2.GET /todos/:id - Retrieve a specific todo item by ID
   app.get('/todos/:id', (req, res) => {
     // const id = parseInt(req.params.id)
     // const ans = todo.find((data)=>{
@@ -72,7 +73,7 @@
       res.json(ans);
     }
   })
-  
+  //3. POST /todos - Create a new todo item
   app.post("/todos", (req, res) => {
     const newTodo = {
       id: Math.floor(Math.random() * 10 + 1),
@@ -82,7 +83,23 @@
     todo.push(newTodo)
     res.status(200).json(todo)
   })
-  
+  //4. PUT /todos/:id - Update an existing todo item by ID
+
+  app.put("/todos/:id",(req,res)=>{
+    const id = req.params.id
+    let item = todo.find((data)=>{
+      return data.id ===id
+    })
+    console.log(item)
+
+    item.title = req.body.title
+    item.description=req.body.description
+    item.completed=true
+
+    return res.json(todo)
+  })
+
+
   app.listen(3000, () => {
     console.log("Server is Up and running...")
   })

@@ -82,6 +82,36 @@ app.post("/todos", (req, res) => {
   res.status(200).json(todo)
 })
 
+app.put("/todos/:id",(req,res)=>{
+  const id = parseInt(req.params.id) 
+  let item = todo.find((data)=>{
+    return data.id ===id
+  })
+ if(!item){
+  return res.status(400).send("No todo")
+ }
+  item.title = req.body.title
+  item.description=req.body.description
+  item.completed=true
+
+  return res.json(todo)
+})
+
+app.delete('/todos/:id',(req,res)=>{
+  const todoIndex= todo.findIndex(t => t.id === parseInt(req.params.id))
+  if(todoIndex === -1){
+    res.status(404).send("No Todo")
+  }else{
+    todo.splice(todoIndex,1)
+    res.send(todo)
+  }
+})
+
+app.use((req, res, next) => {
+  res.status(404).send();
+});
+
+
 app.listen(3000, () => {
   console.log("Server is Up and running...")
 })
