@@ -42,7 +42,7 @@
 
   const express = require('express');
   const bodyParser = require('body-parser');
-  
+  const fs = require("fs")
   const app = express();
   
   app.use(bodyParser.json());
@@ -80,7 +80,16 @@
       title: req.body.title,
       description: req.body.description
     }
+    
     todo.push(newTodo)
+    //const todoString = JSON.stringify(newTodo)
+    fs.writeFile("./todos.json",newTodo,"utf-8",(err,data)=>{
+      if(err){
+        console.log(err)
+      }else{
+        console.log("file written")
+      }
+    })
     res.status(200).json(todo)
   })
   //4. PUT /todos/:id - Update an existing todo item by ID

@@ -6,6 +6,7 @@ import './App.css'
 import Card from './components/Card'
 import UseEffect from './components/UseEffect'
 import Assignment2 from './components/Assignment2'
+import App2 from './components/App2'
 
 function App() {
   const [num, setNum] = useState("My Name is krishna ")
@@ -21,7 +22,8 @@ function App() {
 
       {/* <Card/> */}
       {/* <UseEffect/> */}
-      <Assignment2/>
+      {/* <Assignment2/> */}
+      <App2/>
     </div>
   )
 }
