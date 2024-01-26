@@ -39,96 +39,56 @@ const transactions = [
 //     Example: GET http://localhost:3000/todos/123
 
 
+
+// const request = require('supertest');
+// const assert = require('assert');
 const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require("fs")
+
 const app = express();
+let requestCount = 0;
+app.use(express.json())
+// You have been given an express server which has a few endpoints.
+// Your task is to create a global middleware (app.use) which will
+// maintain a count of the number of requests made to the server in the global
+// requestCount variable
 
-app.use(bodyParser.json());
+let numberOfRequestsForUser = {};
+setInterval(() => {
+    numberOfRequestsForUser = {};
+    console.log("Set Interval")
+}, 3000)
 
+app.use(function(req, res, next) {
+  const userId = req.headers["user-id"];
 
-// const todo = [{
-//   "id": 5,
-//   "title": "priya@gmail.com",
-//   "description": "123321"
-// }]
-//1.GET /todos - Retrieve all todo items
-app.get('/todos', (req, res) => {
-  res.status(200).json(todo)
-})
-
-//2.GET /todos/:id - Retrieve a specific todo item by ID
-app.get('/todos/:id', (req, res) => {
-  // const id = parseInt(req.params.id)
-  // const ans = todo.find((data)=>{
-  // return data.id===id;
-  // })
-  // res.status(200).json(ans)
-
-  const ans = todo.find(t => t.id === parseInt(req.params.id));
-  if (!ans) {
-    res.status(404).send("No TODO");
+  if (numberOfRequestsForUser[userId]) {
+    numberOfRequestsForUser[userId] = numberOfRequestsForUser[userId] + 1;
+    if (numberOfRequestsForUser[userId] > 3) {
+      res.status(404).send("no entry");
+    } else {
+      next();
+    }
   } else {
-    res.json(ans);
-  }
-})
-//3. POST /todos - Create a new todo item
-app.post("/todos", (req, res) => {
-  const newTodo = {
-    id: Math.floor(Math.random() * 10 + 1),
-    title: req.body.title,
-    description: req.body.description
-  }
-  fs.readFile("todos.json", "utf-8", (err, data) => {
-    if (err) throw err;
-    const todo = JSON.parse(data)
-    todo.push(newTodo)
-    const todoString = JSON.stringify(todo)
-    fs.writeFile("todos.json", todoString, "utf-8", (err, data) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log("file written")
-      }
-      res.status(201).json(newTodo)
-    })
-   
-  })
-
-})
-//4. PUT /todos/:id - Update an existing todo item by ID
-
-app.put("/todos/:id", (req, res) => {
-  const id = req.params.id
-
-  let item = todo.find((data) => {
-    return data.id === id
-  })
-  item.title = req.body.title
-  item.description = req.body.description
-  item.completed = true
-  return res.json(todo)
-})
-
-// 5. DELETE /todos/:id - Delete a todo item by ID
-
-app.delete('/todos/:id', (req, res) => {
-  const todoIndex = todo.findIndex(t => t.id === parseInt(req.params.id))
-  if (todoIndex === -1) {
-    res.status(404).send("No Todo")
-  } else {
-    todo.splice(todoIndex, 1)
-    res.send(todo)
+    numberOfRequestsForUser[userId] = 1;
+    next();
   }
 })
 
-app.use((req, res, next) => {
-  res.status(404).send();
+
+app.get('/user', function(req, res) {
+  res.status(200).json({ name: 'john' });
 });
 
-app.listen(3000, () => {
-  console.log("Server is Up and running...")
+app.post('/user', function(req, res) {
+  res.status(200).json({ msg: 'created dummy user' });
+});
+
+app.listen(3000,()=>{
+  console.log("server is up")
 })
 
 
-module.exports = app;
+
+
+
+

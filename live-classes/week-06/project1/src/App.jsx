@@ -11,7 +11,7 @@ function App() {
   // const handleInputChange = (event) => {
   //   setInputValue(event.target.value);
   // }
-
+//below usememo only hit when then is any change in inputvalue
   const total = useMemo(()=>{
     let ans = 0;
     for (let i = 0; i <= inputValue; i++) {
