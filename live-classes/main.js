@@ -40,28 +40,34 @@ const transactions = [
 
 
 
-const z = require("zod")
-// const mySchema = z.string();
+const ALL_USERS = [
+  {
+      username: "harkirat@gmail.com",
+      password: "123",
+      name: "harkirat singh",
+  },
+  {
+      username: "raman@gmail.com",
+      password: "123321",
+      name: "Raman singh",
+  },
+  {
+      username: "priya@gmail.com",
+      password: "123321",
+      name: "Priya kumari",
+  },
+];
 
-// const mySchema1 =z.array(z.number())
-
-// const mySchema = z.array(z.string())
-// const mySchema =  z.object(
-//   {
-//     email:z.string(),
-//     name:z.string(),
-//     country:z.literal("in").or(z.literal("us"))
-//   }
-// )
-
-const mySchema = z.array(z.string())
-// const obj1 = {
-//   email:"krishna",
-//   name:"kn",
-//   country:"in"
-  
-// }
-
-const ar = [5]
-
-console.log(mySchema.safeParse(ar))
+function userExists(username, password) {
+  // write logic to return true or false if this user exists
+  // in ALL_USERS array
+  // for(let i =0;i<ALL_USERS.length;i++){
+  //     const uname = ALL_USERS[i].username
+  //     if(uname === username){
+  //         return true
+  //     }
+  // }
+const data = ALL_USERS.find(uname=>uname.username===username)
+return data.username
+}
+console.log(userExists("priya@gmail.com",345))
