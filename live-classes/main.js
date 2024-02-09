@@ -38,36 +38,35 @@ const transactions = [
 //     Response: 200 OK with the todo item in JSON format if found, or 404 Not Found if not found.
 //     Example: GET http://localhost:3000/todos/123
 
+const express = require("express")
+const app = express()
 
+app.use(express.json())
 
-const ALL_USERS = [
-  {
-      username: "harkirat@gmail.com",
-      password: "123",
-      name: "harkirat singh",
-  },
-  {
-      username: "raman@gmail.com",
-      password: "123321",
-      name: "Raman singh",
-  },
-  {
-      username: "priya@gmail.com",
-      password: "123321",
-      name: "Priya kumari",
-  },
-];
-
-function userExists(username, password) {
-  // write logic to return true or false if this user exists
-  // in ALL_USERS array
-  // for(let i =0;i<ALL_USERS.length;i++){
-  //     const uname = ALL_USERS[i].username
-  //     if(uname === username){
-  //         return true
-  //     }
-  // }
-const data = ALL_USERS.find(uname=>uname.username===username)
-return data.username
+function isOlsEnaughMiddleware(req,res,next){
+  const age = req.query.age
+  if (age > 14) {
+    next()
+  } else {
+    res.json({
+      msg: "You are not allowd for riden in Ride "
+    })
+  }
 }
-console.log(userExists("priya@gmail.com",345))
+app.use(isOlsEnaughMiddleware)
+
+app.get("/ride1",(req, res) => {
+  res.status(200).json({
+    msg: "You have successfully riden in Ride one,Enjoy"
+  })
+})
+
+app.get("/ride2",(req, res) => {
+  res.status(200).json({
+    msg: "You have successfully riden in Ride two,Enjoy"
+  })
+})
+
+app.listen(3000, () => {
+  console.log("Server is Up")
+})
