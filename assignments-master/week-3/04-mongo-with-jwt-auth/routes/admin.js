@@ -1,14 +1,55 @@
 const { Router } = require("express");
 const adminMiddleware = require("../middleware/admin");
+const { Admin, User } = require("../db");
 const router = Router();
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = require("../config");
 
 // Admin Routes
-router.post('/signup', (req, res) => {
+router.post('/signup', async (req, res) => {
     // Implement admin signup logic
+    const username = req.body.username;
+    const password = req.body.password;
+    // Admin.create({
+    //     username,
+    //     password
+    // })
+    // .then((val) =>res.json({
+    //     msg:"Admin created"
+    // }))
+    // .catch((err)=> res.json({
+    //     msg:"Admin not registerd"
+    // }))
+    await Admin.create({
+        username,
+        password
+    })
+     res.json({
+        msg:"Admin created successfully"
+     })
 });
 
-router.post('/signin', (req, res) => {
+router.post('/signin', async (req, res) => {
     // Implement admin signup logic
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const user = await User.find({
+        username,
+        password
+    })
+    if(user){
+        const token = jwt.sign({
+            username
+        },JWT_SECRET)
+        res.json({
+            token
+        })
+    }else{
+        res.status(411).json({
+            msg:"Incorrect password"
+        })
+    }
 });
 
 router.post('/courses', adminMiddleware, (req, res) => {
